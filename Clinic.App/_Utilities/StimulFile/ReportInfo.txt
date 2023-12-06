@@ -1,0 +1,1 @@
+﻿ قرار گیرد  ..\Clinic.App\bin\Debug در مسیر  Report.mrt برای استفاده از چاپ , فایل
