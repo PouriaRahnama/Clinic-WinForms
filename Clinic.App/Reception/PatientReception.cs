@@ -1,4 +1,5 @@
-﻿using Clinic.Data.Entities;
+﻿using Clinic.App.Patient_Info;
+using Clinic.Data.Entities;
 using Clinic.DataLayer;
 using ValidationComponents;
 
@@ -20,6 +21,8 @@ namespace Clinic.App.Patient_Reception
                 {
                     dgName.AutoGenerateColumns = false;
                     dgName.DataSource = db.patietInfoService.GetPatientName();
+                    if (dgName.Rows.Count != 0)
+                        dgName.Rows[0].Selected = false;
                 }
             }
             else

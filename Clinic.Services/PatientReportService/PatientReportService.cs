@@ -32,7 +32,7 @@ namespace Clinic.DataLayer.Services
             {
                 Description = p.Description,
                 DoctorName = p.DoctorName,
-                ID = p.Id,
+                ID = p.ReceptionId,
                 PatientName = p.Reception.Patient.FullName,
                 medicine = p.medicine,
                 Reason = p.Reception.Reason,

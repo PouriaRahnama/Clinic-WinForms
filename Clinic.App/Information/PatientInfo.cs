@@ -23,20 +23,22 @@ namespace Clinic.App.Patient_Info
             using (UnitOfWork db = new UnitOfWork())
             {
                 // Model 1
-                //dgPatient.AutoGenerateColumns = false;
-                //dgPatient.DataSource = db.patietInfoService.GetAll();
-
+                dgPatient.AutoGenerateColumns = false;
+                dgPatient.DataSource = db.patietInfoService.GetAll();
+                if (dgPatient.Rows.Count != 0)
+                    dgPatient.Rows[0].Selected = false;
 
                 // Model 2
-                List<Data.Entities.PatientInfo> resualt = new List<Data.Entities.PatientInfo>();
-                resualt.AddRange(db.patietInfoService.GetAll());
+                //List<Data.Entities.PatientInfo> resualt = new List<Data.Entities.PatientInfo>();
+                //resualt.AddRange(db.patietInfoService.GetAll());
 
-                dgPatient.Rows.Clear();
-                foreach (var Patient in resualt)
-                {
-                    dgPatient.Rows.Add(Patient.Id,Patient.FullName,Patient.Age,Patient.Mobile,Patient.Address);
-                }
-
+                //dgPatient.Rows.Clear();
+                //foreach (var Patient in resualt)
+                //{
+                //    dgPatient.Rows.Add(Patient.Id,Patient.FullName,Patient.Age,Patient.Mobile,Patient.Address);
+                //}
+                //if (dgPatient.Rows.Count != 0)
+                //    dgPatient.Rows[0].Selected = false;
             }
         }
         #endregion

@@ -8,7 +8,7 @@ namespace Clinic.Data.Persistent.Ef
     {
         public void Configure(EntityTypeBuilder<PatientReport> builder)
         {
-            builder.HasKey(x => x.Id);
+            builder.HasKey(x => x.ReceptionId);
         }
     }
 }

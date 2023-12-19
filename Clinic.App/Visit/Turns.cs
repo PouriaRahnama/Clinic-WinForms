@@ -95,6 +95,8 @@ namespace Clinic.App.Patient_Visit
                     string PatientName = db.patietInfoService.GetPatientNameById(Patient.PatientId);
                     dgPatient.Rows.Add(Patient.Id, PatientName, Patient.Reason, Patient.Data.ToString("yyyy/MM/dd"), Patient.Time.ToString(), Patient.CostOfVisit.ToString("#,0 تومان"));
                 }
+                if (dgPatient.Rows.Count != 0)
+                    dgPatient.Rows[0].Selected = false;
 
             }
         }

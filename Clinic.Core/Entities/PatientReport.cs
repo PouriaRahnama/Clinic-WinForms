@@ -2,7 +2,7 @@
 
 namespace Clinic.Data.Entities
 {
-    public class PatientReport : BaseEntity
+    public class PatientReport : BaseRelation
     {
         public int ReceptionId { get; set; }
         public string DoctorName { get; set; }

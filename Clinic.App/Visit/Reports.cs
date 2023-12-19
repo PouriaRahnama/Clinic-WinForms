@@ -2,6 +2,7 @@
 using Clinic.DataLayer;
 using System.Data;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace Clinic.App.Patient_Visit
 {
@@ -29,6 +30,9 @@ namespace Clinic.App.Patient_Visit
                     dgShow.Rows.Add(Patient.ID, Patient.PatientName, Patient.Reason, Patient.DoctorName,
                         Patient.medicine, Patient.money.ToString("#,0"), Patient.date.ToString("yyyy/MM/dd"), Patient.time, Patient.Description);
                 }
+                if (dgShow.Rows.Count != 0)
+                    dgShow.Rows[0].Selected = false;
+
             }
         }
 
