@@ -63,17 +63,21 @@ namespace Clinic.App.Patient_Info
                     if (_patient == 0)
                     {
                         db.patietInfoService.CreatePatientInfo(patient);
+                        db.Save();
                     }
                     else
                     {
-                        //var pat = db.patietInfoService.GetPatientById(_patient);
-                        //pat.FullName = txtFullName.Text;
-                        //pat.Mobile = txtMobile.Text;
-                        //pat.Age = int.Parse(txtAge.Text.ToString());
-                        //pat.Address = txtAddress.Text;
-                        //pat.ImageName = imageName;
+                        var pat = db.patietInfoService.GetPatientById(_patient);
+                        var OldImage = pat.ImageName;
+                        pat.FullName = txtFullName.Text;
+                        pat.Mobile = txtMobile.Text;
+                        pat.Age = int.Parse(txtAge.Text.ToString());
+                        pat.Address = txtAddress.Text;
+                        pat.ImageName = imageName;
                         patient.Id = _patient;
-                        db.patietInfoService.UpdatePatientInfo(patient);
+                        // db.patietInfoService.UpdatePatientInfo(patient);
+                        db.Save();
+                        File.Delete(Application.StartupPath + $"Images/{OldImage}");
                     }
                     db.Save();
                 }
