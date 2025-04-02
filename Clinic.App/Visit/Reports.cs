@@ -1,6 +1,8 @@
 ﻿using Clinic.App._Utilities.RtlMessageBox;
 using Clinic.DataLayer;
+using ClosedXML.Excel;
 using System.Data;
+using System.Globalization;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -58,34 +60,42 @@ namespace Clinic.App.Patient_Visit
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            DataTable dtPrint = new DataTable();
-            dtPrint.Columns.Add("PatientName");
-            dtPrint.Columns.Add("ReasonForReferral");
-            dtPrint.Columns.Add("DoctorName");
-            dtPrint.Columns.Add("medicine");
-            dtPrint.Columns.Add("money");
-            dtPrint.Columns.Add("date");
-            dtPrint.Columns.Add("time");
-            dtPrint.Columns.Add("Description");
-
-            foreach (DataGridViewRow item in dgShow.Rows)
+            using (SaveFileDialog sfd = new SaveFileDialog() { Filter = "Excel Workbook|*.xlsx" })
             {
-                dtPrint.Rows.Add(
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    using (var workbook = new XLWorkbook())
+                    {
+                        var worksheet = workbook.Worksheets.Add("Data");
+                        worksheet.RightToLeft = true; 
+                                                   
+                        worksheet.Rows().Height = 25; // ارتفاع ردیف‌ها
+                                               
+                        for (int i = 1; i <= dgShow.Columns.Count; i++)
+                        {
+                            worksheet.Column(i).Width = 17; // عرض ستون‌ها را بزرگ‌تر می‌کنیم
+                        }
 
+                        for (int i = 1; i < dgShow.Columns.Count; i++)
+                            worksheet.Cell(1, i).Value = dgShow.Columns[i].HeaderText;
 
-                    item.Cells[1].Value.ToString(),
-                    item.Cells[2].Value.ToString(),
-                    item.Cells[3].Value.ToString(),
-                    item.Cells[4].Value.ToString(),
-                    item.Cells[5].Value.ToString(),
-                    item.Cells[6].Value.ToString(),
-                    item.Cells[7].Value.ToString(),
-                    item.Cells[8].Value.ToString()
-                   );
+                        for (int i = 0; i < dgShow.Rows.Count; i++)
+                            for (int j = 1; j < dgShow.Columns.Count; j++)
+                                worksheet.Cell(i + 2, j).Value = dgShow?.Rows[i]?.Cells[j]?.Value?.ToString() ?? "";
+
+                        // ذخیره‌ی فایل
+                        workbook.SaveAs(sfd.FileName);
+                        MessageBox.Show("Export successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
             }
-            //stiReport1.Load(Application.StartupPath + "/Report.mrt");
-            //stiReport1.RegData("dt", dtPrint);
-            //stiReport1.Show();
+
+        }
+
+        private string ToShamsiExcelOutput(DateTime value)
+        {
+            PersianCalendar pc = new PersianCalendar();
+            return pc.GetYear(value) + "-" + pc.GetMonth(value).ToString("00") + "-" + pc.GetDayOfMonth(value).ToString("00");
         }
     }
 }
